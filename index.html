@@ -1,13 +1,409 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Privacy Policy</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy - Activity Launcher & Shortcuts</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --card: #121a2b;
+      --card-2: #182338;
+      --text: #e8eefc;
+      --muted: #a9b6d3;
+      --line: rgba(255,255,255,0.09);
+      --accent: #6ea8fe;
+      --accent-2: #8b5cf6;
+      --ok: #7dd3fc;
+      --max: 920px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      line-height: 1.65;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 20% -10%, rgba(110,168,254,0.18), transparent 55%),
+        radial-gradient(900px 500px at 100% 0%, rgba(139,92,246,0.16), transparent 45%),
+        linear-gradient(180deg, #0a1020 0%, #0b1220 100%);
+      min-height: 100vh;
+    }
+
+    .wrap {
+      width: min(100% - 32px, var(--max));
+      margin: 0 auto;
+    }
+
+    .hero {
+      padding: 64px 0 28px;
+    }
+
+    .hero-card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      padding: 34px 28px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 18px 50px rgba(0,0,0,0.24);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(110,168,254,0.12);
+      color: #d9e7ff;
+      border: 1px solid rgba(110,168,254,0.25);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.2px;
+    }
+
+    h1 {
+      margin: 18px 0 10px;
+      font-size: clamp(32px, 6vw, 52px);
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 17px;
+      max-width: 760px;
+      margin: 0;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .meta .pill {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--line);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 22px;
+      padding: 10px 0 56px;
+    }
+
+    @media (max-width: 860px) {
+      .grid { grid-template-columns: 1fr; }
+      .toc { position: static; }
+    }
+
+    .toc {
+      position: sticky;
+      top: 22px;
+      align-self: start;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 18px;
+      backdrop-filter: blur(10px);
+    }
+
+    .toc h2 {
+      margin: 2px 0 12px;
+      font-size: 15px;
+      color: #dce7ff;
+    }
+
+    .toc a {
+      display: block;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 8px 10px;
+      border-radius: 12px;
+      font-size: 14px;
+      transition: 0.18s ease;
+    }
+
+    .toc a:hover {
+      color: var(--text);
+      background: rgba(255,255,255,0.05);
+    }
+
+    .content {
+      display: grid;
+      gap: 18px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,0.035), rgba(255,255,255,0.02));
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 26px 24px;
+      box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+    }
+
+    h2.section-title {
+      margin: 0 0 12px;
+      font-size: 24px;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    p {
+      margin: 0 0 14px;
+      color: var(--text);
+    }
+
+    p:last-child { margin-bottom: 0; }
+
+    ul {
+      margin: 0;
+      padding-left: 20px;
+      color: var(--text);
+    }
+
+    li + li { margin-top: 8px; }
+
+    .muted { color: var(--muted); }
+
+    .highlight {
+      color: #eff6ff;
+      background: linear-gradient(90deg, rgba(110,168,254,0.18), rgba(139,92,246,0.14));
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 14px 16px;
+      border-radius: 16px;
+    }
+
+    a {
+      color: var(--ok);
+      text-underline-offset: 2px;
+    }
+
+    .footer {
+      padding: 8px 0 44px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.95em;
+      background: rgba(255,255,255,0.06);
+      padding: 2px 6px;
+      border-radius: 8px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Privacy Policy</h1>
-  <p>Last updated: April 2026</p>
+  <div class="wrap">
+    <header class="hero">
+      <div class="hero-card">
+        <div class="eyebrow">Privacy Policy</div>
+        <h1>Activity Launcher &amp; Shortcuts</h1>
+        <p class="subtitle">
+          This Privacy Policy explains what data this app may access, how it is used,
+          and how third-party services such as advertising and analytics may process information.
+        </p>
+        <div class="meta">
+          <div class="pill"><strong>Last updated:</strong>&nbsp; April 2, 2026</div>
+          <div class="pill"><strong>Developer:</strong>&nbsp; Mobile App MTV</div>
+        </div>
+      </div>
+    </header>
 
-  <p>This app does not collect or share personal data.</p>
+    <main class="grid">
+      <nav class="toc" aria-label="Table of contents">
+        <h2>Contents</h2>
+        <a href="#overview">1. Overview</a>
+        <a href="#information">2. Information We Access</a>
+        <a href="#use">3. How Information Is Used</a>
+        <a href="#ads">4. Advertising</a>
+        <a href="#analytics">5. Analytics & Firebase</a>
+        <a href="#sharing">6. Data Sharing</a>
+        <a href="#retention">7. Data Retention</a>
+        <a href="#security">8. Security</a>
+        <a href="#children">9. Children’s Privacy</a>
+        <a href="#rights">10. Your Choices & Rights</a>
+        <a href="#changes">11. Changes</a>
+        <a href="#contact">12. Contact</a>
+      </nav>
+
+      <section class="content">
+        <article id="overview" class="card">
+          <h2 class="section-title">1. Overview</h2>
+          <p>
+            <strong>Activity Launcher &amp; Shortcuts</strong> is an Android utility app that helps users
+            view available app activities, open supported screens, and create shortcuts for faster access.
+          </p>
+          <p>
+            The app itself does not sell personal data. Some information may be processed by third-party
+            services that support app functionality, such as <strong>Google AdMob</strong> for advertising and
+            <strong>Google Firebase</strong> for analytics, diagnostics, and performance monitoring.
+          </p>
+          <p class="highlight">
+            The app is designed to process core functionality on-device. However, third-party SDKs included in the app
+            may automatically collect certain device, usage, and diagnostic information as described below.
+          </p>
+        </article>
+
+        <article id="information" class="card">
+          <h2 class="section-title">2. Information We Access</h2>
+          <p>The app may access or process the following categories of information:</p>
+          <ul>
+            <li><strong>Installed app information on your device</strong>, such as app names, package names, icons, and available activities, in order to display launchable screens and create shortcuts.</li>
+            <li><strong>Device and technical information</strong>, such as device model, operating system version, app version, language, country, IP-derived general region, crash logs, and performance diagnostics.</li>
+            <li><strong>Usage information</strong>, such as screens viewed, interactions inside the app, session data, and feature usage events.</li>
+            <li><strong>Advertising-related data</strong>, which may include identifiers and signals used by ad providers to serve, measure, and improve ads, subject to your device settings and applicable law.</li>
+          </ul>
+          <p class="muted">
+            The exact information collected by third-party services may vary depending on your device,
+            Android version, region, consent choices, and SDK behavior.
+          </p>
+        </article>
+
+        <article id="use" class="card">
+          <h2 class="section-title">3. How Information Is Used</h2>
+          <p>Information may be used to:</p>
+          <ul>
+            <li>Provide the core functionality of the app, including browsing activities and creating shortcuts.</li>
+            <li>Maintain, debug, and improve app stability, usability, and performance.</li>
+            <li>Measure feature usage and understand how users interact with the app.</li>
+            <li>Display advertisements and evaluate their effectiveness.</li>
+            <li>Prevent abuse, errors, fraud, and technical issues.</li>
+          </ul>
+        </article>
+
+        <article id="ads" class="card">
+          <h2 class="section-title">4. Advertising</h2>
+          <p>
+            This app may display ads using <strong>Google AdMob</strong> or related Google advertising services.
+            Advertising partners may collect certain information from your device or app interactions to provide,
+            personalize, measure, and improve ads, subject to applicable settings and consent requirements.
+          </p>
+          <p>
+            Ad-related processing may include the use of identifiers, approximate location derived from IP address,
+            device information, and ad performance data.
+          </p>
+          <p>
+            You can manage certain advertising preferences through your device settings and, where applicable,
+            through consent prompts shown in the app.
+          </p>
+        </article>
+
+        <article id="analytics" class="card">
+          <h2 class="section-title">5. Analytics &amp; Firebase</h2>
+          <p>
+            This app may use <strong>Google Firebase</strong>, including services such as
+            <strong>Firebase Analytics</strong> and <strong>Firebase Crashlytics</strong>.
+          </p>
+          <ul>
+            <li><strong>Firebase Analytics</strong> may collect usage events, engagement data, device details, and app interaction information.</li>
+            <li><strong>Firebase Crashlytics</strong> may collect crash traces, device state information, and technical diagnostics to help identify and fix bugs.</li>
+          </ul>
+          <p>
+            These services may process information on Google servers in accordance with Google’s privacy practices.
+          </p>
+          <p>
+            More information can be found in Google’s privacy documentation:
+            <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google Privacy Policy</a>.
+          </p>
+        </article>
+
+        <article id="sharing" class="card">
+          <h2 class="section-title">6. Data Sharing</h2>
+          <p>
+            We do not directly sell your personal information. We may share information with trusted service providers
+            only as necessary to operate, analyze, secure, and monetize the app, including:
+          </p>
+          <ul>
+            <li>Google AdMob and related ad technology providers</li>
+            <li>Google Firebase and related Google infrastructure services</li>
+            <li>Legal authorities if required by law or to protect rights, safety, and security</li>
+          </ul>
+        </article>
+
+        <article id="retention" class="card">
+          <h2 class="section-title">7. Data Retention</h2>
+          <p>
+            On-device data used for core functionality is generally handled locally. Data collected by third-party
+            SDKs may be retained according to those providers’ own retention policies and operational needs.
+          </p>
+          <p>
+            We keep only the information reasonably necessary to provide and improve the app, comply with legal obligations,
+            and resolve disputes or technical issues.
+          </p>
+        </article>
+
+        <article id="security" class="card">
+          <h2 class="section-title">8. Security</h2>
+          <p>
+            Reasonable technical and organizational measures are used to protect information related to this app.
+            However, no method of electronic storage or transmission is completely secure, and absolute security cannot be guaranteed.
+          </p>
+        </article>
+
+        <article id="children" class="card">
+          <h2 class="section-title">9. Children’s Privacy</h2>
+          <p>
+            This app is not directed to children under the age required by applicable law to use such services independently.
+            If you believe a child has provided personal information in violation of applicable law, please contact us so appropriate action can be taken.
+          </p>
+        </article>
+
+        <article id="rights" class="card">
+          <h2 class="section-title">10. Your Choices &amp; Rights</h2>
+          <p>Depending on your location, you may have rights related to your personal information, including rights to access, delete, restrict, or object to certain processing.</p>
+          <p>
+            You may also:
+          </p>
+          <ul>
+            <li>adjust ad personalization settings on your device or Google account, where available;</li>
+            <li>disable or limit certain permissions in Android settings;</li>
+            <li>stop using the app and uninstall it at any time.</li>
+          </ul>
+          <p>
+            If you have a privacy-related request, contact us using the email below.
+          </p>
+        </article>
+
+        <article id="changes" class="card">
+          <h2 class="section-title">11. Changes to This Privacy Policy</h2>
+          <p>
+            This Privacy Policy may be updated from time to time. Any changes will be posted on this page with a revised
+            <strong>Last updated</strong> date. Continued use of the app after an update means the revised policy will apply.
+          </p>
+        </article>
+
+        <article id="contact" class="card">
+          <h2 class="section-title">12. Contact</h2>
+          <p>
+            If you have any questions about this Privacy Policy or the app’s data practices, contact:
+          </p>
+          <p>
+            <strong>Mobile App MTV</strong><br />
+            Email: <a href="mailto:manchuk.yulias@gmail.com">manchuk.yulias@gmail.com</a>
+          </p>
+          <p class="muted">
+            Replace the email above with your real support or privacy contact email before publishing.
+          </p>
+        </article>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="wrap">
+        © 2026 Mobile App MTV. All rights reserved.
+      </div>
+    </footer>
+  </div>
 </body>
 </html>
